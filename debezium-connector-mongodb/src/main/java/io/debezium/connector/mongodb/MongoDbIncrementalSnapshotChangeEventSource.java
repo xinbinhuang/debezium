@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.errors.ConnectException;
 import org.bson.BsonDocument;
+import org.bson.BsonValue;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -413,7 +414,7 @@ public class MongoDbIncrementalSnapshotChangeEventSource
         if (row == null) {
             return null;
         }
-        var documentId = ((BsonDocument) row[0]).get(DOCUMENT_ID);
+        BsonValue documentId = ((BsonDocument) row[0]).get(DOCUMENT_ID);
 
         Object key;
 
