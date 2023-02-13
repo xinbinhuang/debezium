@@ -337,6 +337,7 @@ public final class SourceInfo extends BaseSourceInfo {
         Position position = INITIAL_POSITION;
         String namespace = "";
         long wallTime = 0L;
+        String stripeAudit = null;
         if (oplogEvent != null) {
             BsonTimestamp ts = extractEventTimestamp(masterEvent);
             Long opId = masterEvent.containsKey("h") ? masterEvent.getInt64("h").getValue() : null;
@@ -345,6 +346,9 @@ public final class SourceInfo extends BaseSourceInfo {
             namespace = oplogEvent.getString("ns").getValue();
             if (oplogEvent.containsKey("wall")) {
                 wallTime = oplogEvent.getDateTime("wall").getValue();
+            }
+            if (oplogEvent.containsKey(STRIPE_AUDIT)) {
+                stripeAudit = oplogEvent.getString(STRIPE_AUDIT).getValue();
             }
         }
         positionsByReplicaSetName.put(replicaSetName, position);
